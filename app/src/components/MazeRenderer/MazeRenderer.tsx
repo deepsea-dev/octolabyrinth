@@ -1,16 +1,36 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { HostPollGameResponse } from '../../models/HostPollGameReponse';
 import { Maze } from '../../models/Maze';
+import { queryApi } from '../../wrappedFetch';
 
 type MazeRendererProps = {
-  maze: Maze
+  gameId: string
 };
 
-export const MazeRenderer: React.FC<MazeRendererProps> = ({ maze }) => {
+export const MazeRenderer: React.FC<MazeRendererProps> = ({ gameId }) => {
   const canvasRef = useRef(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
+
+  const [maze, setMaze] = useState<Maze|null>();
+
+  const update = () => {
+    queryApi<HostPollGameResponse>(`/api/${gameId}/status`)
+      .then(res => setMaze(res.maze));
+  };
+
+
+  useEffect(() => {
+    drawMaze();
+  }, [maze]);
+
+  useEffect(() => {
+    const end = setInterval(update, 200);
+    return () => clearInterval(end);
+  },[]);
   const drawMaze = () => {
     if (ctx == null) return;
+    if (maze == null) return;
 
     const width = ctx.canvas.width;
     const height = ctx.canvas.height;
@@ -45,7 +65,7 @@ export const MazeRenderer: React.FC<MazeRendererProps> = ({ maze }) => {
 
   useEffect(() => {
     drawMaze();
-    console.log(maze.avatars);
+    console.log(maze?.avatars);
   }, [ctx]);
 
   useEffect(() => {

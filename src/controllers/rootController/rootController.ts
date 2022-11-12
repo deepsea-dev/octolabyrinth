@@ -61,12 +61,11 @@ export const init = (app: express.Application): void => {
 
     return res.status(200).json({moves: game_manager.getPlayersMoves(req.params.gameId, req.params.playerId)});
   });
-  app.get('/aoi/:gamwId/:playerId/move', async (req, res) => {
-    if (!game_manager.doesGameExist(req.params.gamwId)) {
+  app.post('/api/:gameId/:playerId/move', async (req, res) => {
+    if (!game_manager.doesGameExist(req.params.gameId)) {
       return res.sendStatus(400);
     }
-
-    game_manager.tryMove(req.params.gamwId, req.params.playerId, req.body.move);
+    game_manager.tryMove(req.params.gameId, req.params.playerId, req.body.move);
     return res.sendStatus(200);
   });
   app.get('/api/test', async (res, req) => {

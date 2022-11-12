@@ -36,7 +36,7 @@ export const Host: React.FC = () => {
         </JoinContainer>
       </HeaderWrapper>
       <MidSection>
-        {gameData?.maze && <MazeRenderer maze={gameData?.maze}/>}
+        {gameData?.maze && gameId && <MazeRenderer gameId={gameId}/>}
         {!gameData?.started &&
           <RulesColumn>
             <div>Race to the center, each team controls a character but you each dont have all the directions!</div>

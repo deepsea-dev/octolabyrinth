@@ -106,9 +106,39 @@ class Game {
     if (player === undefined) return;
 
     // Check if they are allowed to make a move
-    if ((Date.now() - player.timeOfLastMove) <= 1000) return;
+    if ((Date.now() - player.timeOfLastMove) <= 300) return;
 
-    // Now check if move is valid
+    // Now make the move.
+    const team = player.teamId;
+    console.log(`team ${team}, avatars ${JSON.stringify(this.maze.avatars)}`)
+    let x = this.maze.avatars.find(a => a.id == team)?.x!;
+    let y = this.maze.avatars.find(a => a.id == team)?.y!;
+
+    console.log(`x: ${x}, y: ${y},`);
+
+    if (move == "U") {
+      if (this.maze.grid[y-1][x] != 1) {
+        y -= 1;
+      }
+    } else if (move == "L") {
+      if (this.maze.grid[y][x-1] != 1) {
+        x -= 1;
+      }
+    } else if (move == "D") {
+      if (this.maze.grid[y+1][x] != 1) {
+        y += 1;
+      }
+    } else if (move == "R") {
+      if (this.maze.grid[y][x+1] != 1) {
+        x += 1;
+      }
+    } 
+
+    const avatar = this.maze.avatars.find(a => a.id == team)!;
+    avatar.x = x;
+    avatar.y = y;
+    const index = this.maze.avatars.findIndex(a => a.id == team);
+    this.maze.avatars[index] = avatar;
 
     // If valid
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
