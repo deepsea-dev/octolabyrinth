@@ -19,7 +19,7 @@ class Game {
     this.player_directions_finished = false;
     this.isStarted = false;
     this.teams = [];
-    this.maze = generateMaze(4, 35);
+    this.maze = generateMaze(4, 25);
   }
 
   addPlayer(id: string, nickname: string) {

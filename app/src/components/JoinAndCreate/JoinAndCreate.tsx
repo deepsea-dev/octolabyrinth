@@ -24,10 +24,12 @@ export const JoinAndCreate: React.FC = () => {
   return (
     <JoinAndCreateContainer>
       <JoinContainer>
-        <input placeholder='enter game code' onChange={(e) => setGameCode(e.target.value)} value={gameCode}></input>
+        <CodeEntry placeholder='enter game code' onChange={(e) => setGameCode(e.target.value)} value={gameCode}></CodeEntry>
         <ActionButton onClick={joinGame}>Join</ActionButton>
       </JoinContainer>
-      <ActionButton onClick={createGame}>Create</ActionButton>
+      <CreateContainer>
+        <ActionButton onClick={createGame}>Create</ActionButton>
+      </CreateContainer>
     </JoinAndCreateContainer>
   );
 };
@@ -35,15 +37,55 @@ export const JoinAndCreate: React.FC = () => {
 const JoinAndCreateContainer = styled.div`
   display: flex;
   justify-content: space-around;
+  width: 100%;
+  align-items: center;
+  row-gap: 32px;
+  column-gap: 32px;
+  margin: 32px;
+
+  flex-direction: row;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+const CodeEntry = styled.input`
+  font-size: 30px;
+  height: 80px;
+  border-radius: 24px;
+  padding: 16px
 `;
 
 const JoinContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: green;
+  justify-content: space-around;
+  row-gap: 32px;
+  max-width: 300px;
+  background-color: #3C362A;
+  padding: 32px;
+  border-radius: 32px;
+  border: 4px solid #C9D6EA;
+  height: 300px
+`;
+
+const CreateContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  row-gap: 32px;
+  max-width: 300px;
+  background-color: #3C362A;
+  padding: 32px;
+  border-radius: 32px; 
+  border: 4px solid #C9D6EA;
+  height: 300px
 `;
 
 const ActionButton = styled.button`
-  width: 400px;
-  height: 200px;
+  font-size: 30px;
+  width: 300px;
+  height: 100px;
+  border-radius: 24px;
+  background-color: #E98A15;
 `;
