@@ -1,0 +1,55 @@
+name: Lint-server
+
+on: [push, pull_request]
+
+jobs:
+  lint-server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+      - name: Install
+        run: yarn ci
+      - name: Eslint
+        run: yarn lint-server
+  lint-app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+      - name: Install
+        run: yarn ci
+      - name: Eslint
+        run: yarn lint-server
+  test-app:
+    needs: [lint-server, lint-app]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+      - name: Install
+        run: yarn ci
+      - name: test
+        run: yarn test-app
+  test-server:
+    needs: [lint-server, lint-app]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+      - name: Install
+        run: yarn ci
+      - name: test
+        run: yarn test-server
