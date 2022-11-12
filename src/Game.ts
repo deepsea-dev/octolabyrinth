@@ -2,7 +2,7 @@ import { randomBytes } from 'crypto';
 import { GameStatus } from './models/GameStatus';
 import Player from './Player';
 import { Maze } from './models/Maze';
-import { generateMazeGrid } from './MazeGenerator';
+import { generateMaze } from './MazeGenerator';
 
 class Game {
   id: string;
@@ -13,7 +13,7 @@ class Game {
     this.id = id;
     this.players = {};
     this.isStarted = false;
-    this.maze = {grid: generateMazeGrid(35)};
+    this.maze = generateMaze(4, 35);
   }
 
   addPlayer(id: string, nickname: string) {
