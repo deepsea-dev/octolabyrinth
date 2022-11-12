@@ -22,6 +22,13 @@ export const init = (app: express.Application): void => {
   app.get('/api/get_game', async (req, res) => {
     return;
   });
+  app.get('/api/:id/start_game', async (req, res) => {
+    if (!game_manager.doesGameExist(req.params.id)) {
+      return res.sendStatus(400);
+    }
+
+    game_manager.processTeams(req.params.id);
+  });
   app.get('/api/:id/status', async (req, res: express.Response<GameStatus>) => {
     const gameId = req.params.id;
     if (!game_manager.doesGameExist(gameId)) return res.sendStatus(400);
@@ -36,5 +43,23 @@ export const init = (app: express.Application): void => {
     } catch {
       return res.sendStatus(400);
     }
+  });
+  app.get('/api/:id/get_player_directions', async (req, res) => {
+    if (!game_manager.doesGameExist(req.params.id)) {
+      return res.sendStatus(400);
+    }
+    const game = game_manager.getGame(req.params.id);
+    if (!game.player_directions_finished) {
+      return res.sendStatus(202); // Not finished processing directions for players
+    }
+  });
+  app.get('/api/test', async (res, req) => {
+    const game_id = game_manager.addGame();
+    for (let i = 0; i < 50; i++) {
+      game_manager.addPlayer(game_id, 'nweondownewfo');
+    }
+    game_manager.processTeams(game_id);
+    // console.log(game_manager.games[game_id].teams);
+
   });
 };
