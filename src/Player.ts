@@ -3,9 +3,11 @@ export default class Player {
   nickname: string;
   teamId: string = 'none';
   moves: string[] = [];
+  timeOfLastMove: number;
   constructor(id: string, nickname: string) {
     this.id = id;
     this.nickname = nickname;
+    this.timeOfLastMove = 0;
   }
 
   getID() {
