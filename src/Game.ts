@@ -31,7 +31,7 @@ class Game {
     this.players.set(playerID, new Player(playerID, nickname));
     return playerID;
   }
-  
+
   processPlayerDirections() {
     return; //todo
   }
@@ -52,12 +52,12 @@ class Game {
       for (let teamIndex = 0; teamIndex < numTeams; teamIndex++) {
         const player_id = playerIds[playerI];
         teams[teamIndex].set(player_id, []);
-        if (teams[numTeams-1].size === 4) break;
+        if (teams[numTeams - 1].size === 4) break;
         playerI++;
         if (playerI == playerIds.length) break;
 
       }
-      if (teams[numTeams-1].size === 4) break;
+      if (teams[numTeams - 1].size === 4) break;
 
     }
 
@@ -99,6 +99,21 @@ class Game {
       playerNames: [...this.players.values()].map(p => p.getNickname()),
       started: this.isStarted,
     };
+  }
+
+  tryMove(gameId: string, playerId: string, move: string) {
+    const player = this.players.get(playerId);
+    if (player === undefined) return;
+
+    // Check if they are allowed to make a move
+    if ((Date.now() - player.timeOfLastMove) <= 1000) return;
+
+    // Now check if move is valid
+
+    // If valid
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    this.players.get(playerId)!.timeOfLastMove = Date.now();
+
   }
 }
 

@@ -49,6 +49,12 @@ class GameManager {
   getPlayersMoves(gameId: string, playerId: string): string[] {
     return this.games[gameId].players.get(playerId)?.moves || [];
   }
+
+  tryMove(gameId: string, playerId: string, move: string) {
+    if (!this.games[gameId].players.has(playerId)) return;
+
+    this.games[gameId].tryMove(gameId, playerId, move);
+  }
 }
 
 export default GameManager;
