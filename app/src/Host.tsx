@@ -31,16 +31,21 @@ export const Host: React.FC = () => {
         <Header/>
         <JoinContainer>
           <UrlContainer>
-            Join at <UrlSpan>{`octolabyrinth.tech/play/${gameId}`}</UrlSpan>
+            {gameData?.started ? 'Game in progress!' : (<>Join at <UrlSpan>{`octolabyrinth.tech/play/${gameId}`}</UrlSpan></>)}
           </UrlContainer>
         </JoinContainer>
       </HeaderWrapper>
       <MidSection>
         {gameData?.maze && <MazeRenderer maze={gameData?.maze}/>}
+        {!gameData?.started &&
+          <RulesColumn>
+            <div>Race to the center, each team controls a character but you each dont have all the directions!</div>
+          </RulesColumn>
+        }
         <PlayerColumn>
           <div>Players: </div>
           {gameData?.playerNames.map(name => <span>{name}</span>)}
-          <StartButton onClick={startGame}>Start</StartButton>
+          {!gameData?.started && <StartButton onClick={startGame}>Start</StartButton>}
         </PlayerColumn>
       </MidSection>
     </HostContainer>
@@ -86,6 +91,8 @@ const JoinContainer = styled.div`
 const MidSection = styled.div`
   display: flex;
   justify-content: space-around;
+  column-gap: 16px;
+  margin: 32px;
 `;
 
 const PlayerColumn = styled.div`
@@ -105,4 +112,16 @@ const StartButton = styled.button`
   height: 80px;
   border-radius: 24px;
   background-color: #E98A15;
+`;
+
+const RulesColumn = styled.button`
+  display: flex;
+  flex-direction: column;
+  background-color: #C9D6EA;
+  border-radius: 24px;
+  border: 4px solid #C9D6EA;
+  padding: 8px 64px;
+  font-size: 32px;
+  justify-content: space-around;
+  font-weight: 900;
 `;
