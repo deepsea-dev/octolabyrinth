@@ -29,6 +29,7 @@ export const MazeRenderer: React.FC<MazeRendererProps> = ({ maze }) => {
 
   useEffect(() => {
     drawMaze();
+    console.log(maze.avatars);
   }, [ctx]);
 
   useEffect(() => {
