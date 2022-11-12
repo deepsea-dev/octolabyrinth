@@ -27,6 +27,7 @@ export const Host = () => {
       <div>Host of game {gameId}</div>
       <div>Players, {gameData?.playerNames}</div>
       {gameData?.maze && <MazeRenderer maze={gameData?.maze}/>}
+      <button>Start</button>
     </div>
   );
 };
