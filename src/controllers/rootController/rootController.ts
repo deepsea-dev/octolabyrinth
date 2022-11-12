@@ -7,6 +7,7 @@ import { CreateGameResponse } from '../../models/CreateGameResponse';
 import { HelloMessageResponse } from '../../models/helloMessageResponse';
 import GameManager from '../../GameManager';
 import { GameJoinResponse } from '../../models/GameJoinResponse';
+import { GameStatus } from '../../models/GameStatus';
 
 const game_manager = new GameManager();
 
@@ -20,6 +21,12 @@ export const init = (app: express.Application): void => {
   });
   app.get('/api/get_game', async (req, res) => {
     return;
+  });
+  app.get('/api/:id/status', async (req, res: express.Response<GameStatus>) => {
+    const gameId = req.params.id;
+    if (!game_manager.doesGameExist(gameId)) return res.sendStatus(400);
+
+    return res.status(200).json(game_manager.getGame(gameId).getStatus())
   });
   app.post('/api/:id/join', async (req, res: express.Response<GameJoinResponse>) => {
     if (!req.body.nickname) return res.sendStatus(400);
