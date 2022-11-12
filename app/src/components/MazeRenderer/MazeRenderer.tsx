@@ -1,29 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
+import { Maze } from '../../models/Maze';
 
-export const Maze = () => {
+type MazeRendererProps = {
+  maze: Maze
+};
 
-  const maze = [
-    [0,1,0,0,0,1],
-    [0,1,1,0,1,1],
-    [1,0,0,0,0,1],
-    [0,0,1,1,0,1],
-    [0,1,0,0,0,1]
-  ];
-
+export const MazeRenderer: React.FC<MazeRendererProps> = ({ maze }) => {
   const canvasRef = useRef(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
-
   const drawMaze = () => {
     if (ctx == null) return;
 
     const width = ctx.canvas.width;
     const height = ctx.canvas.height;
 
-    const unit = Math.min(width, height) / (maze.length + 1);
+    const unit = Math.min(width, height) / (maze.grid.length + 1);
 
-    for (let i = 0; i < maze.length; i++) {
-      for (let j = 0; j < maze[i].length; j++) {
-        if (maze[i][j] == 1) {
+    for (let i = 0; i < maze.grid.length; i++) {
+      for (let j = 0; j < maze.grid[i].length; j++) {
+        if (maze.grid[i][j] == 1) {
           ctx.beginPath();
           ctx.rect(j*unit, i*unit, unit, unit);
           ctx.fill();
@@ -31,6 +26,10 @@ export const Maze = () => {
       }
     }
   };
+
+  useEffect(() => {
+    drawMaze();
+  }, [ctx]);
 
   useEffect(() => {
     if (canvasRef != null) {
@@ -42,7 +41,6 @@ export const Maze = () => {
   return (
     <div>
       <canvas ref={canvasRef} height={400} width={400}/>
-      <button onClick={drawMaze}>draw</button>
     </div>
   );
 };
