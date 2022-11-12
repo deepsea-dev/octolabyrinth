@@ -21,6 +21,10 @@ class GameManager {
     return game;
   }
 
+  processTeams(id: string) {
+    this.games[id].processTeams();
+  }
+
   doesGameExist(id: string) {
     try {
       return this.getGame(id) !== undefined;

@@ -21,6 +21,13 @@ export const init = (app: express.Application): void => {
   app.get('/api/get_game', async (req, res) => {
     return;
   });
+  app.get('/api/:id/start_game', async (req, res) => {
+    if (!game_manager.doesGameExist(req.params.id)) {
+      return res.sendStatus(400);
+    }
+
+    game_manager.processTeams(req.params.id);
+  });
   app.post('/api/:id/join', async (req, res: express.Response<GameJoinResponse>) => {
     if (!req.body.nickname) return res.sendStatus(400);
     try {
@@ -38,5 +45,14 @@ export const init = (app: express.Application): void => {
     if (!game.player_directions_finished) {
       return res.sendStatus(202); // Not finished processing directions for players
     }
+  });
+  app.get('/api/test', async (res, req) => {
+    const game_id = game_manager.addGame();
+    for (let i = 0; i < 50; i++) {
+      game_manager.addPlayer(game_id, 'nweondownewfo');
+    }
+    game_manager.processTeams(game_id);
+    // console.log(game_manager.games[game_id].teams);
+
   });
 };
