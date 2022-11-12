@@ -54,6 +54,7 @@ class Game {
         teams[teamIndex].set(player_id, []);
         if (teams[numTeams-1].size === 4) break;
         playerI++;
+        if (playerI == playerIds.length) break;
 
       }
       if (teams[numTeams-1].size === 4) break;
@@ -83,7 +84,7 @@ class Game {
   getStatus(): GameStatus {
     return {
       maze: this.maze,
-      playerNames: Object.values(this.players).map(p => p.getNickname()),
+      playerNames: [...this.players.values()].map(p => p.getNickname()),
       started: this.isStarted,
     };
   }

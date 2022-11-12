@@ -22,7 +22,7 @@ export const init = (app: express.Application): void => {
   app.get('/api/get_game', async (req, res) => {
     return;
   });
-  app.get('/api/:id/start_game', async (req, res) => {
+  app.get('/api/:id/start', async (req, res) => {
     if (!game_manager.doesGameExist(req.params.id)) {
       return res.sendStatus(400);
     }
