@@ -1,15 +1,19 @@
 import { randomBytes } from 'crypto';
 import { GameStatus } from './models/GameStatus';
 import Player from './Player';
+import { Maze } from './models/Maze';
+import { generateMazeGrid } from './MazeGenerator';
 
 class Game {
   id: string;
   players: Record<string, Player>;
   isStarted: boolean;
+  maze: Maze;
   constructor(id: string) {
     this.id = id;
     this.players = {};
     this.isStarted = false;
+    this.maze = {grid: generateMazeGrid(35)};
   }
 
   addPlayer(id: string, nickname: string) {
@@ -24,7 +28,7 @@ class Game {
 
   getStatus(): GameStatus {
     return {
-      maze: {grid: [[1,0],[0,1]]},
+      maze: this.maze,
       playerNames: Object.values(this.players).map(p => p.getNickname()),
       started: this.isStarted,
     };
