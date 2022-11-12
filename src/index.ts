@@ -4,6 +4,7 @@ import { init as rootControllerInit } from './controllers/rootController/rootCon
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 const port = process.env.PORT || 8088;
 

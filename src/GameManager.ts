@@ -14,7 +14,28 @@ class GameManager {
   }
 
   getGame(id: string) {
-    return;
+    const game = this.games[id];
+    if (game === undefined) {
+      throw Error('Game id does not exist');
+    }
+    return game;
+  }
+
+  doesGameExist(id: string) {
+    try {
+      return this.getGame(id) !== undefined;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  addPlayer(id: string, nickname: string) {
+    if (!this.doesGameExist(id)) {
+      throw Error('The game you are trying to add a player to does not exist');
+    }
+
+    // Return player id after adding them to the game
+    return this.games[id].addPlayer(id, nickname);
   }
 }
 
