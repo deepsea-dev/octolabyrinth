@@ -30,4 +30,13 @@ export const init = (app: express.Application): void => {
       return res.sendStatus(400);
     }
   });
+  app.get('/api/:id/get_player_directions', async (req, res) => {
+    if (!game_manager.doesGameExist(req.params.id)) {
+      return res.sendStatus(400);
+    }
+    const game = game_manager.getGame(req.params.id);
+    if (!game.player_directions_finished) {
+      return res.sendStatus(202); // Not finished processing directions for players
+    }
+  });
 };

@@ -4,9 +4,11 @@ import Player from './Player';
 class Game {
   id: string;
   players: Record<string, Player>;
+  player_directions_finished: boolean;
   constructor(id: string) {
     this.id = id;
     this.players = {};
+    this.player_directions_finished = false;
   }
 
   addPlayer(id: string, nickname: string) {
@@ -17,6 +19,10 @@ class Game {
 
     this.players[playerID] = new Player(playerID, nickname);
     return playerID;
+  }
+
+  processPlayerDirections() {
+    return; //todo
   }
 }
 
