@@ -33,6 +33,6 @@ export const Player = () => {
   }
 
   return (
-    <div>PLAYER of game {gameId}</div>
+    <div>PLAYER of game {gameId} with id {playerId}</div>
   );
 };
