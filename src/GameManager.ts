@@ -10,6 +10,7 @@ class GameManager {
   addGame() {
     const id = randomBytes(2).toString('hex');
     this.games[id] = new Game(id);
+    return id;
   }
 
   getGame(id: string) {
