@@ -1,38 +1,44 @@
 Arguments: 
-  /usr/bin/node /usr/bin/yarn server
+  /usr/bin/node /usr/bin/yarn add @types/maze-generator
 
 PATH: 
-  /home/harry/pebble-dev/pebble-sdk-4.5-linux64/bin:/home/harry/pebble-dev/pebble-sdk-4.5-linux64/bin:/home/harry/pebble-dev/pebble-sdk-4.5-linux64/bin:/home/harry/pebble-dev/pebble-sdk-4.5-linux64/bin:/usr/local/bin:/usr/bin:/home/harry/scripts:/usr/local/sbin:/opt/android-sdk/platform-tools:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/harry/Android/Sdk/platform-tools
+  /usr/local/bin:/usr/bin:/usr/local/sbin:/opt/android-sdk/platform-tools:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
 
 Yarn version: 
   1.22.19
 
 Node version: 
-  16.15.1
+  16.16.0
 
 Platform: 
   linux x64
 
 Trace: 
-  SyntaxError: /home/harry/Documents/CatVibesTwo/package.json: Unexpected token / in JSON at position 212
-      at JSON.parse (<anonymous>)
-      at /usr/lib/node_modules/yarn/lib/cli.js:1629:59
-      at Generator.next (<anonymous>)
-      at step (/usr/lib/node_modules/yarn/lib/cli.js:310:30)
-      at /usr/lib/node_modules/yarn/lib/cli.js:321:13
+  Error: https://registry.yarnpkg.com/@types%2fmaze-generator: Not found
+      at Request.params.callback [as _callback] (/usr/lib/node_modules/yarn/lib/cli.js:66145:18)
+      at Request.self.callback (/usr/lib/node_modules/yarn/lib/cli.js:140890:22)
+      at Request.emit (node:events:527:28)
+      at Request.<anonymous> (/usr/lib/node_modules/yarn/lib/cli.js:141862:10)
+      at Request.emit (node:events:527:28)
+      at IncomingMessage.<anonymous> (/usr/lib/node_modules/yarn/lib/cli.js:141784:12)
+      at Object.onceWrapper (node:events:641:28)
+      at IncomingMessage.emit (node:events:539:35)
+      at endReadableNT (node:internal/streams/readable:1345:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
 
 npm manifest: 
   {
-    "name": "cat_vibes_two",
+    "name": "octolabyrinth",
     "version": "1.0.0",
     "main": "index.js",
-    "repository": "https://github.com/deepsea-dev/CatVibesTwo.git",
-    "author": "harry48225 <harrybest800@gmail.com>",
+    "repository": "https://github.com/deepsea-dev/octolabyrinth.git",
+    "author": "harry48225 <harrybest800@gmail.com>, bwbellairs <bwbellairs.yt@gmail.com>",
     "license": "MIT",
-    //"type": "module",
+    "type": "module",
     "dependencies": {
       "cors": "^2.8.5",
       "express": "^4.18.1",
+      "maze-generator": "^0.1.2",
       "ts-node": "^10.9.1"
     },
     "devDependencies": {
@@ -52,7 +58,7 @@ npm manifest:
       "typescript": "^4.7.4"
     },
     "scripts": {
-      "server": "nodemon src/index.ts",
+      "server": "nodemon --watch './**/*.ts' --exec 'node --experimental-specifier-resolution=node --loader ts-node/esm' src/index.ts",
       "app": "yarn --cwd app run start",
       "start": "concurrently \"yarn run server\" \"yarn run app\"",
       "lint-server": "eslint . --ext .ts",
@@ -60,7 +66,8 @@ npm manifest:
       "lint": "yarn lint-server && yarn lint-app",
       "test-server": "jest tests/**",
       "test-app": "yarn --cwd app run test",
-      "ci": "yarn install --frozen-lockfile && yarn --cwd app install --frozen-lockfile"
+      "ci": "yarn install --frozen-lockfile && yarn --cwd app install --frozen-lockfile",
+      "build-server": "tsc src --ourDir ./build"
     }
   }
 
@@ -2666,6 +2673,11 @@ Lockfile:
     integrity sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg==
     dependencies:
       tmpl "1.0.5"
+  
+  maze-generator@^0.1.2:
+    version "0.1.2"
+    resolved "https://registry.yarnpkg.com/maze-generator/-/maze-generator-0.1.2.tgz#27f6a4a7c47ce11af5c7d1ac9f63f23384df6e08"
+    integrity sha512-pO2vFebwwRsKnztceR0VcgLMNaYynUO6XSNJepke8t8zJewQbB3D8Mltf+ZSDOFxhXba+4aeleM/nR3pDbxxeQ==
   
   media-typer@0.3.0:
     version "0.3.0"
