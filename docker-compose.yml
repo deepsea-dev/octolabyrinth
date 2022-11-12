@@ -1,0 +1,9 @@
+services:
+  labyrinth:
+    image: deepsea-dev/octolabyrinth
+    container_name: labyrinth
+    restart: unless-stopped
+    ports:
+      - 80:80
+    environment: 
+      - PORT=80
