@@ -2,15 +2,21 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CreateGameResponse } from '../../models/CreateGameResponse';
 import { queryApi } from '../../wrappedFetch';
+import { useNavigate } from 'react-router-dom';
 
 type GameCode = string
 
 export const JoinAndCreate: React.FC = () => {
+  const navigate = useNavigate();
+
   const createGame = () => {
     queryApi<CreateGameResponse>('/api/create_game').then((res) => {
       setGameCode(res.id);
     }).catch((err) => {});
+  };
 
+  const joinGame = () => {
+    navigate(`/play/${gameCode}`);
   };
 
   const [gameCode, setGameCode] = useState<GameCode>('');
@@ -19,7 +25,7 @@ export const JoinAndCreate: React.FC = () => {
     <JoinAndCreateContainer>
       <JoinContainer>
         <input placeholder='enter game code' onChange={(e) => setGameCode(e.target.value)} value={gameCode}></input>
-        <ActionButton>Join</ActionButton>
+        <ActionButton onClick={joinGame}>Join</ActionButton>
       </JoinContainer>
       <ActionButton onClick={createGame}>Create</ActionButton>
     </JoinAndCreateContainer>
