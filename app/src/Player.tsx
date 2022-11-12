@@ -27,6 +27,10 @@ export const Player = () => {
     const end = setInterval(update, 1000);
     return () => clearInterval(end);
   },[playerId]);
+
+  const sendMove = (direction: string) => {
+    queryApi(`/api/${gameId}/${playerId}/move`, 'POST', { move: direction });
+  };
   
 
   if (!nameIsSet) {
@@ -48,7 +52,8 @@ export const Player = () => {
   return (
     <div>
       <div>PLAYER of game {gameId} with id {playerId}</div>
-      <div>Moves: {moves}</div>
+      <div>Moves:</div>
+      {moves.map(move => <button onClick={() => sendMove(move)}>{move}</button>)}
     </div>
   );
 };
