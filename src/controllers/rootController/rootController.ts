@@ -28,6 +28,7 @@ export const init = (app: express.Application): void => {
     }
 
     game_manager.processTeams(req.params.id);
+    game_manager.startGame(req.params.id);
   });
   app.get('/api/:id/status', async (req, res: express.Response<GameStatus>) => {
     const gameId = req.params.id;

@@ -41,6 +41,10 @@ class GameManager {
     // Return player id after adding them to the game
     return this.games[id].addPlayer(id, nickname);
   }
+
+  startGame(id: string) {
+    this.games[id].isStarted = true;
+  }
 }
 
 export default GameManager;
