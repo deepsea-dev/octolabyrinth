@@ -6,4 +6,4 @@ export const Home: React.FC = () => (
     <Header></Header>
     <JoinAndCreate></JoinAndCreate>
   </div>
-)
+);

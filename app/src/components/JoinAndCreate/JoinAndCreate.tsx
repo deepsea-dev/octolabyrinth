@@ -11,7 +11,7 @@ export const JoinAndCreate: React.FC = () => {
 
   const createGame = () => {
     queryApi<CreateGameResponse>('/api/create_game').then((res) => {
-      setGameCode(res.id);
+      navigate(`/host/${res.id}`);
     }).catch((err) => {});
   };
 
