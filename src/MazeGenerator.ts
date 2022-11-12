@@ -25,8 +25,8 @@ export const generateMaze = (numberOfTeams = 4, size = 25): Maze => {
     },
     {
       id: '4',
-      x: 1,
-      y: size*2-1,
+      x: size*2-1,
+      y: size,
       color: 'purple',
     },
   ].slice(0, numberOfTeams);

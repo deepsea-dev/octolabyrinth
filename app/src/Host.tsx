@@ -18,6 +18,7 @@ export const Host: React.FC = () => {
     const end = setInterval(update, 1000);
     return () => clearInterval(end);
   },[]);
+  
   return (
     <div>
       <div>Host of game {gameId}</div>

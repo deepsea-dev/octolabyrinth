@@ -25,6 +25,13 @@ export const MazeRenderer: React.FC<MazeRendererProps> = ({ maze }) => {
         }
       }
     }
+
+    for (const avatar of maze.avatars) {
+      ctx.beginPath();
+      ctx.arc(avatar.x*unit + unit/2, avatar.y*unit + unit/2, unit/2, 0, 360);
+      ctx.fillStyle = avatar.color;
+      ctx.fill();
+    }
   };
 
   useEffect(() => {
