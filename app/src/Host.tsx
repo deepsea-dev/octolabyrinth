@@ -14,6 +14,10 @@ export const Host: React.FC = () => {
       .then(res => setGameData(res));
   };
 
+  const startGame = () => {
+    queryApi(`/api/${gameId}/start`);
+  };
+
   useEffect(() => {
     const end = setInterval(update, 1000);
     return () => clearInterval(end);
@@ -24,7 +28,7 @@ export const Host: React.FC = () => {
       <div>Host of game {gameId}</div>
       <div>Players, {gameData?.playerNames}</div>
       {gameData?.maze && <MazeRenderer maze={gameData?.maze}/>}
-      <button>Start</button>
+      <button onClick={startGame}>Start</button>
     </div>
   );
 };
