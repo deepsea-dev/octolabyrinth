@@ -45,6 +45,10 @@ class GameManager {
   startGame(id: string) {
     this.games[id].isStarted = true;
   }
+
+  getPlayersMoves(gameId: string, playerId: string): string[] {
+    return this.games[gameId].players.get(playerId)?.moves || [];
+  }
 }
 
 export default GameManager;

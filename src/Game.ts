@@ -10,7 +10,7 @@ class Game {
   id: string;
   players: Map<string, Player>;
   player_directions_finished: boolean;
-  teams: Array<unknown>;
+  teams: Map<string, string[]>[];
   isStarted: boolean;
   maze: Maze;
   constructor(id: string) {
@@ -79,6 +79,18 @@ class Game {
     console.log(teams);
 
     this.teams = teams;
+
+    for (let [teamIndex, team] of teams.entries()) {
+      for (const player of team) {
+        const playerId = player[0];
+        const moves = player[1];
+        const playerData = this.players.get(playerId)!;
+        playerData.moves = moves;
+        playerData.teamId = teamIndex + '';
+        console.log(playerData);
+        this.players.set(playerId, playerData);
+      }
+    }
 
   }
   getStatus(): GameStatus {

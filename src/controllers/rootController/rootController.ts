@@ -45,14 +45,21 @@ export const init = (app: express.Application): void => {
       return res.sendStatus(400);
     }
   });
-  app.get('/api/:id/get_player_directions', async (req, res) => {
-    if (!game_manager.doesGameExist(req.params.id)) {
+  // app.get('/api/:id/get_player_directions', async (req, res) => {
+  //   if (!game_manager.doesGameExist(req.params.id)) {
+  //     return res.sendStatus(400);
+  //   }
+  //   const game = game_manager.getGame(req.params.id);
+  //   if (!game.player_directions_finished) {
+  //     return res.sendStatus(202); // Not finished processing directions for players
+  //   }
+  // });
+  app.get('/api/:gameId/:playerId', async (req, res) => {
+    if (!game_manager.doesGameExist(req.params.gameId)) {
       return res.sendStatus(400);
     }
-    const game = game_manager.getGame(req.params.id);
-    if (!game.player_directions_finished) {
-      return res.sendStatus(202); // Not finished processing directions for players
-    }
+
+    return res.status(200).json({moves: game_manager.getPlayersMoves(req.params.gameId, req.params.playerId)});
   });
   app.get('/api/test', async (res, req) => {
     const game_id = game_manager.addGame();

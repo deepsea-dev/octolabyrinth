@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { PlayerPollGameResponse } from './models/PlayerPollGameResponse';
 import { queryApi } from './wrappedFetch';
 
 export const Player = () => {
@@ -7,6 +8,7 @@ export const Player = () => {
 
   const [nameIsSet, setNameIsSet] = useState(false);
   const [playerName, setPlayerName] = useState<string>('');
+  const [moves, setMoves] = useState<string[]>([]);
 
   const [playerId, setPlayerId] = useState<string | null>(null);
 
@@ -15,6 +17,17 @@ export const Player = () => {
     setNameIsSet(true);
     queryApi<{player_id: string}>(`/api/${gameId}/join`, 'POST', {nickname: playerName}).then((res) => setPlayerId(res.player_id));
   };
+
+  const update = () => {
+    queryApi<PlayerPollGameResponse>(`/api/${gameId}/${playerId}`)
+      .then(res => setMoves(res.moves));
+  };
+
+  useEffect(() => {
+    const end = setInterval(update, 1000);
+    return () => clearInterval(end);
+  },[playerId]);
+  
 
   if (!nameIsSet) {
     return (
@@ -33,6 +46,9 @@ export const Player = () => {
   }
 
   return (
-    <div>PLAYER of game {gameId} with id {playerId}</div>
+    <div>
+      <div>PLAYER of game {gameId} with id {playerId}</div>
+      <div>Moves: {moves}</div>
+    </div>
   );
 };
