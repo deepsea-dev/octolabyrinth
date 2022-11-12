@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import styled from 'styled-components';
 import { Maze } from '../../models/Maze';
 
 type MazeRendererProps = {
@@ -55,8 +56,17 @@ export const MazeRenderer: React.FC<MazeRendererProps> = ({ maze }) => {
   }, [canvasRef]);
 
   return (
-    <div>
-      <canvas ref={canvasRef} height={400} width={400}/>
-    </div>
+    <CanvasContainer>
+      <canvas ref={canvasRef} width={600} height={600}/>
+    </CanvasContainer>
   );
 };
+
+const CanvasContainer = styled.div`
+  border-radius: 24px;
+  background-color: #F4F5F5;
+  border: 4px solid #C9D6EA;
+  padding: 32px;
+  width: 600px;
+  height: 600px;
+`;

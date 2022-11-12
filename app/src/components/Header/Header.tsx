@@ -10,5 +10,11 @@ export const Header: React.FC = () => {
 };
 
 const HeaderContainer = styled.div`
-  background-color: red
+  background-color: #663F46;
+  height: 60px;
+  font-size: 32px;
+  color: #E8F7EE;
+  font-weight: 900;
+  padding: 16px 32px;
+  vertical-align: middle;
 `;

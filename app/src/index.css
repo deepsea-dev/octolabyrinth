@@ -5,9 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #B8C4BB;
+  font-weight: 800;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* https://coolors.co/e8f7ee-b8c4bb-663f46-3c362a-c9d6ea-f4f5f5*/
