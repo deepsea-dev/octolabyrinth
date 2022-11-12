@@ -1,5 +1,8 @@
 import { randomBytes } from 'crypto';
+import { GameStatus } from './models/GameStatus';
 import Player from './Player';
+import { Maze } from './models/Maze';
+import { generateMaze } from './MazeGenerator';
 
 const MAX_PLAYERS_PER_TEAM = 4;
 
@@ -8,11 +11,15 @@ class Game {
   players: Map<string, Player>;
   player_directions_finished: boolean;
   teams: Array<unknown>;
+  isStarted: boolean;
+  maze: Maze;
   constructor(id: string) {
     this.id = id;
     this.players = new Map();
-    this.teams = [];
     this.player_directions_finished = false;
+    this.isStarted = false;
+    this.teams = [];
+    this.maze = generateMaze(4, 35);
   }
 
   addPlayer(id: string, nickname: string) {
@@ -24,7 +31,7 @@ class Game {
     this.players.set(playerID, new Player(playerID, nickname));
     return playerID;
   }
-
+  
   processPlayerDirections() {
     return; //todo
   }
@@ -72,6 +79,13 @@ class Game {
 
     this.teams = teams;
 
+  }
+  getStatus(): GameStatus {
+    return {
+      maze: this.maze,
+      playerNames: Object.values(this.players).map(p => p.getNickname()),
+      started: this.isStarted,
+    };
   }
 }
 
