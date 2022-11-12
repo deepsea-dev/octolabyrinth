@@ -2,9 +2,10 @@ export const queryApi = async <T>(url: string, meth: string = 'GET', resBody?: a
   console.log(`querying: ${url}`);
   const response = await fetch(url, {
     headers: {
-      'Accept': 'application/json'
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: resBody,
+    body: JSON.stringify(resBody),
     method: meth
   });
   const body = await response.json();

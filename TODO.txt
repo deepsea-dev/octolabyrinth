@@ -1,14 +1,10 @@
 Backend:
   Maze generation algorithm
-  Endpoint for players to hit to join game:
-    They provide a name,
-    then they get added to a queue of all players in the game.
-    Server responds with players id.
 
 
-    Their names show on the host screen,
-    another endpoint for host to trigger game start.
-      Assign to teams
+  Their names show on the host screen,
+  another endpoint for host to trigger game start.
+    Assign to teams
 
   Endpoint that host can poll to get maze state and players, and game state eg started - request has player id
   endpoint for player to poll to get their available moves - request has gameid and player id
@@ -16,7 +12,6 @@ Backend:
   endpoint for player to hit to send direction - they must include their id and game id. Throttle to one request per min
 
 Frontend:
-Maze renderer
 host screen with names and start button, and game duration
 
 Player screen:
