@@ -39,7 +39,7 @@ export const generateMaze = (numberOfTeams = 4, size = 25): Maze => {
 
 const generateMazeGrid = (size = 25) => {
   const MAZE_SIZE = size;
-  const maze = generator(MAZE_SIZE);
+  const maze = generator(MAZE_SIZE, undefined, undefined, Math.random()*10_000);
 
   const expandedMaze: number[][] = Array(MAZE_SIZE*2 + 1).fill(0).map(() => Array(MAZE_SIZE*2 +1).fill(0));;
   for (let i = 0; i < maze.length; i++) {
