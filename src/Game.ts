@@ -15,6 +15,7 @@ class Game {
   isStarted: boolean;
   maze: Maze;
   lastEliminationTime: number;
+  isFinished: boolean;
   constructor(id: string) {
     this.id = id;
     this.players = new Map();
@@ -23,6 +24,7 @@ class Game {
     this.teams = [];
     this.maze = generateMaze(4, 25);
     this.lastEliminationTime = 0;
+    this.isFinished = false;
   }
 
   addPlayer(id: string, nickname: string) {
@@ -118,12 +120,17 @@ class Game {
       timeUntilNextElimination = ELIMINATION_INTERVAL;
     }
 
+    if (this.maze.avatars.length == 1) {this.isFinished = true}
+
     return {
       maze: this.maze,
       playerNames: [...this.players.values()].map(p => p.getNickname()),
       started: this.isStarted,
       distances: distances.map(d => [d[0], Math.round((d[1] as number)*10)/10]),
-      timeUntilNextElimination: Math.round(timeUntilNextElimination)
+      timeUntilNextElimination: Math.round(timeUntilNextElimination),
+      finished: this.isFinished,
+      winner: this.isFinished ? this.maze.avatars[0].color : 'undetermined',
+      winningPlayers: this.isFinished ? [...this.players.values()].filter(p => p.teamId == this.maze.avatars[0].id).map(p => p.nickname) : []
     };
   }
 

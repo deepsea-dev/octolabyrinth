@@ -6,4 +6,7 @@ export type HostPollGameResponse = {
   started: boolean,
   distances: (string|number)[][],
   timeUntilNextElimination: number,
+  finished: boolean,
+  winner: string,
+  winningPlayers: string[]
 }

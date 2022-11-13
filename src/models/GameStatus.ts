@@ -5,5 +5,8 @@ export type GameStatus = {
   playerNames: string[],
   started: boolean,
   distances: (string | number)[][],
-  timeUntilNextElimination: number
+  timeUntilNextElimination: number,
+  finished: boolean,
+  winner: string,
+  winningPlayers: string[]
 }
