@@ -48,6 +48,11 @@ export const Host: React.FC = () => {
           {!gameData?.started && <StartButton onClick={startGame}>Start</StartButton>}
         </PlayerColumn>
       </MidSection>
+      {gameData?.started &&
+      <BottomSection>
+        {gameData?.distances.map(d => (<div>{d[0]}: {d[1]}m</div>))}
+        <div>next elimination in {gameData?.timeUntilNextElimination} seconds!</div>
+      </BottomSection>}
     </HostContainer>
   );
 };
@@ -124,4 +129,10 @@ const RulesColumn = styled.button`
   font-size: 32px;
   justify-content: space-around;
   font-weight: 900;
+`;
+
+const BottomSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 `;

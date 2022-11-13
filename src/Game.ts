@@ -5,6 +5,7 @@ import { Maze } from './models/Maze';
 import { generateMaze } from './MazeGenerator';
 
 const MAX_PLAYERS_PER_TEAM = 4;
+const ELIMINATION_INTERVAL = 30;
 
 class Game {
   id: string;
@@ -13,6 +14,7 @@ class Game {
   teams: Map<string, string[]>[];
   isStarted: boolean;
   maze: Maze;
+  lastEliminationTime: number;
   constructor(id: string) {
     this.id = id;
     this.players = new Map();
@@ -20,6 +22,7 @@ class Game {
     this.isStarted = false;
     this.teams = [];
     this.maze = generateMaze(4, 25);
+    this.lastEliminationTime = 0;
   }
 
   addPlayer(id: string, nickname: string) {
@@ -95,10 +98,32 @@ class Game {
     this.maze.avatars = this.maze.avatars.slice(0, numTeams);
   }
   getStatus(): GameStatus {
+
+    let distances: (string|number)[][] = [];
+    for (const avatar of this.maze.avatars) {
+      const distance = Math.pow(Math.pow((this.maze.grid.length / 2 - avatar.y), 2) + Math.pow((this.maze.grid[avatar.y].length / 2 - avatar.x), 2),0.5);
+      distances.push([avatar.color, distance]);
+    }
+
+    distances = distances.sort((a,b) => (a[1] as number) - (b[1] as number));
+
+    let timeUntilNextElimination = 30 - (Date.now() - this.lastEliminationTime)/1000;
+
+    if (!this.isStarted) {timeUntilNextElimination = 100};
+
+    if (timeUntilNextElimination < 0.5) {
+      const avas = this.maze.avatars;
+      this.maze.avatars = avas.filter(a => a.color != distances[distances.length -1][0])
+      this.lastEliminationTime = Date.now();
+      timeUntilNextElimination = ELIMINATION_INTERVAL;
+    }
+
     return {
       maze: this.maze,
       playerNames: [...this.players.values()].map(p => p.getNickname()),
       started: this.isStarted,
+      distances: distances.map(d => [d[0], Math.round((d[1] as number)*10)/10]),
+      timeUntilNextElimination: Math.round(timeUntilNextElimination)
     };
   }
 
@@ -144,6 +169,11 @@ class Game {
     // If valid
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.players.get(playerId)!.timeOfLastMove = Date.now();
+  }
+
+  start() {
+    this.isStarted = true;
+    this.lastEliminationTime = Date.now();
   }
 }
 
