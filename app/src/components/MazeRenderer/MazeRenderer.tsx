@@ -32,6 +32,8 @@ export const MazeRenderer: React.FC<MazeRendererProps> = ({ gameId }) => {
     if (ctx == null) return;
     if (maze == null) return;
 
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
     const width = ctx.canvas.width;
     const height = ctx.canvas.height;
     ctx.fill();
