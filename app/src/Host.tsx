@@ -179,4 +179,5 @@ const BottomSection = styled.div`
   font-size: 32px;
   justify-content: space-around;
   font-weight: 900;
+  margin: 0px 32px;
 `;
