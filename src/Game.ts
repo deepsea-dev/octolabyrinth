@@ -5,7 +5,7 @@ import { Maze } from './models/Maze';
 import { generateMaze } from './MazeGenerator';
 
 const MAX_PLAYERS_PER_TEAM = 4;
-const ELIMINATION_INTERVAL = 30;
+let ELIMINATION_INTERVAL = 30;
 
 class Game {
   id: string;
@@ -98,6 +98,7 @@ class Game {
     }
 
     this.maze.avatars = this.maze.avatars.slice(0, numTeams);
+    ELIMINATION_INTERVAL = 180 / numTeams;
   }
   getStatus(): GameStatus {
 
@@ -109,7 +110,7 @@ class Game {
 
     distances = distances.sort((a,b) => (a[1] as number) - (b[1] as number));
 
-    let timeUntilNextElimination = 30 - (Date.now() - this.lastEliminationTime)/1000;
+    let timeUntilNextElimination = ELIMINATION_INTERVAL - (Date.now() - this.lastEliminationTime)/1000;
 
     if (!this.isStarted) {timeUntilNextElimination = 100};
 

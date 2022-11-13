@@ -42,7 +42,7 @@ export const Host: React.FC = () => {
         {!gameData?.started &&
           <RulesColumn> 
             <QRCodeSVG width={384} height={384} value={`http://octolabyrinth.tech/play/${gameId}`}/>
-            <div>Race to the center, each team controls a character but you each dont have all the directions!</div>
+            <div>Race to the center, each team controls a character but you each dont have all the directions! The furthest away team is elimated periodically</div>
           </RulesColumn>
         }
         <PlayerColumn>
