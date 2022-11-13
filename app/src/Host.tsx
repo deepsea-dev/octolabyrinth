@@ -40,8 +40,8 @@ export const Host: React.FC = () => {
       <><MidSection>
         {gameData?.maze && gameId && <MazeRenderer gameId={gameId}/>}
         {!gameData?.started &&
-          <RulesColumn>yarn 
-            <QRCodeSVG value={`http://octolabyrinth.tech/play/${gameId}`}/>
+          <RulesColumn> 
+            <QRCodeSVG width={384} height={384} value={`http://octolabyrinth.tech/play/${gameId}`}/>
             <div>Race to the center, each team controls a character but you each dont have all the directions!</div>
           </RulesColumn>
         }
@@ -167,6 +167,7 @@ const RulesColumn = styled.button`
   padding: 8px 64px;
   font-size: 32px;
   justify-content: space-around;
+  align-items: center;
   font-weight: 900;
 `;
 
