@@ -52,7 +52,7 @@ export const Host: React.FC = () => {
 
   const startGame = () => {
     queryApi(`/api/${gameId}/start`);
-    toggleWaiting();
+    if (playingWaiting) toggleWaiting();
     togglePlaying();
   };
 
