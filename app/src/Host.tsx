@@ -56,6 +56,9 @@ export const Host: React.FC = () => {
         {gameData?.distances.map(d => (<div>{d[0]}: {d[1]}m</div>))}
         <div>{gameData?.distances[gameData?.distances.length-1][0]} elimination in {gameData?.timeUntilNextElimination} seconds!</div>
       </BottomSection>}
+      {!gameData?.started && <BottomSection>
+        Did you know that an octopus has 2 hearts?
+      </BottomSection>}
       </>}
       {gameData?.finished && 
       <MidSection>
@@ -73,6 +76,7 @@ const HostContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  max-height: 100%;
 `;
 
 const HeaderWrapper = styled.div`
@@ -148,6 +152,10 @@ const PlayerColumn = styled.div`
   padding: 16px 64px;
   font-size: 24px;
   justify-content: space-between;
+  align-items: center;
+  min-width: 300px;
+  max-width: 400px;
+  overflow: hidden;
 `;
 
 const StartButton = styled.button`

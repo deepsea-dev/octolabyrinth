@@ -79,7 +79,7 @@ export const MazeRenderer: React.FC<MazeRendererProps> = ({ gameId }) => {
 
   return (
     <CanvasContainer>
-      <canvas ref={canvasRef} width={600} height={600}/>
+      <canvas ref={canvasRef} width={700} height={700}/>
     </CanvasContainer>
   );
 };
@@ -88,7 +88,7 @@ const CanvasContainer = styled.div`
   border-radius: 24px;
   background-color: #F4F5F5;
   border: 4px solid #C9D6EA;
-  padding: 32px;
-  width: 600px;
-  height: 600px;
+  padding: 16px;
+  width: 700px;
+  height: 700px;
 `;
