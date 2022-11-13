@@ -7,10 +7,42 @@ import { HostPollGameResponse } from './models/HostPollGameReponse';
 import { queryApi } from './wrappedFetch';
 import { QRCodeSVG } from 'qrcode.react';
 
+const useAudio = (url: string): [boolean, ()=>{}] => {
+  const [audio] = useState(new Audio(url));
+  const [playing, setPlaying] = useState(false);
+
+  const toggle = () => setPlaying(!playing);
+
+  useEffect(() => {
+    playing ? audio.play() : audio.pause();
+  },[playing]);
+
+  useEffect(() => {
+    audio.addEventListener('ended', () => setPlaying(false));
+    return () => {
+      audio.removeEventListener('ended', () => setPlaying(false));
+    };
+  }, []);
+
+  return [playing, toggle as ()=>{}];
+};
+
 export const Host: React.FC = () => {
   const { gameId } = useParams();
 
   const [gameData, setGameData] = useState<HostPollGameResponse | null>(null);
+
+  const [playing, toggle] = useAudio('/waiting.mp3');
+
+  useEffect(() => {
+    console.log('toggle');
+    toggle();
+  }, []);
+
+  useEffect(() => {
+    const end = setInterval(update, 1000);
+    return () => clearInterval(end);
+  },[]);
 
   const update = () => {
     queryApi<HostPollGameResponse>(`/api/${gameId}/status`)
@@ -21,11 +53,6 @@ export const Host: React.FC = () => {
     queryApi(`/api/${gameId}/start`);
   };
 
-  useEffect(() => {
-    const end = setInterval(update, 1000);
-    return () => clearInterval(end);
-  },[]);
-  
   return (
     <HostContainer>
       <HeaderWrapper>
