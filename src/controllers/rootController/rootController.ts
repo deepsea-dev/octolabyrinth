@@ -59,6 +59,7 @@ export const init = (app: express.Application): void => {
       return res.sendStatus(400);
     }
 
+    game_manager.feedPlayer(req.params.gameId, req.params.playerId);
     return res.status(200).json({teamColour: game_manager.getPlayersTeam(req.params.gameId, req.params.playerId), moves: game_manager.getPlayersMoves(req.params.gameId, req.params.playerId)});
   });
   app.post('/api/:gameId/:playerId/move', async (req, res) => {

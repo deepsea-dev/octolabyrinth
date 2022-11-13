@@ -61,6 +61,22 @@ class GameManager {
 
     this.games[gameId].tryMove(gameId, playerId, move);
   }
+
+  feedPlayer(gameId: string, playerId: string) {
+    this.games[gameId].players.get(playerId)?.feed();
+
+    const leftPlayers = [...this.games[gameId].players.values()].filter(p => p.hasLeft());
+    const remainingPlayers = [...this.games[gameId].players.values()].filter(p => !p.hasLeft());
+    for (const player of leftPlayers) {
+      const teammate = [...remainingPlayers.values()].find(p => p.teamId == player.teamId);
+
+      if (teammate) {
+        teammate.moves = teammate.moves.concat(player.moves);
+      }
+    }
+
+    this.games[gameId].players = new Map(remainingPlayers.map(p => [p.id, p]));
+  }
 }
 
 export default GameManager;
