@@ -92,6 +92,7 @@ class Game {
       }
     }
 
+    this.maze.avatars = this.maze.avatars.slice(0, numTeams);
   }
   getStatus(): GameStatus {
     return {
