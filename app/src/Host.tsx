@@ -5,6 +5,7 @@ import { Header } from './components/Header/Header';
 import { MazeRenderer } from './components/MazeRenderer/MazeRenderer';
 import { HostPollGameResponse } from './models/HostPollGameReponse';
 import { queryApi } from './wrappedFetch';
+import { QRCodeSVG } from 'qrcode.react';
 
 export const Host: React.FC = () => {
   const { gameId } = useParams();
@@ -38,7 +39,8 @@ export const Host: React.FC = () => {
       <MidSection>
         {gameData?.maze && gameId && <MazeRenderer gameId={gameId}/>}
         {!gameData?.started &&
-          <RulesColumn>
+          <RulesColumn>yarn 
+            <QRCodeSVG value={`http://octolabyrinth.tech/play/${gameId}`}/>
             <div>Race to the center, each team controls a character but you each dont have all the directions!</div>
           </RulesColumn>
         }
