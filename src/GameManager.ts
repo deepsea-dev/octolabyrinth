@@ -43,7 +43,7 @@ class GameManager {
   }
 
   startGame(id: string) {
-    this.games[id].isStarted = true;
+    this.games[id].start();
   }
 
   getPlayersMoves(gameId: string, playerId: string): string[] {

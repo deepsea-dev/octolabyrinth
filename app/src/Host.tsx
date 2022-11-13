@@ -36,7 +36,8 @@ export const Host: React.FC = () => {
           </UrlContainer>
         </JoinContainer>
       </HeaderWrapper>
-      <MidSection>
+      {!gameData?.finished &&
+      <><MidSection>
         {gameData?.maze && gameId && <MazeRenderer gameId={gameId}/>}
         {!gameData?.started &&
           <RulesColumn>yarn 
@@ -50,6 +51,20 @@ export const Host: React.FC = () => {
           {!gameData?.started && <StartButton onClick={startGame}>Start</StartButton>}
         </PlayerColumn>
       </MidSection>
+      {gameData?.started &&
+      <BottomSection>
+        {gameData?.distances.map(d => (<div>{d[0]}: {d[1]}m</div>))}
+        <div>{gameData?.distances[gameData?.distances.length-1][0]} elimination in {gameData?.timeUntilNextElimination} seconds!</div>
+      </BottomSection>}
+      </>}
+      {gameData?.finished && 
+      <MidSection>
+        <WinningSection>
+          <h1>{gameData.winner} wins!</h1>
+          <h2>Team members: </h2>
+          {gameData.winningPlayers.map(name => <h3>{name}</h3>)}
+        </WinningSection>
+      </MidSection>}
     </HostContainer>
   );
 };
@@ -97,6 +112,33 @@ const MidSection = styled.div`
   margin: 32px;
 `;
 
+const WinningSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  column-gap: 16px;
+  margin: 32px;
+  border-radius: 24px;
+  background-color: #F4F5F5;
+  border: 4px solid #C9D6EA;
+  padding: 32px;
+  width: 600px;
+  height: 600px;
+  align-items: center;
+
+  h1 {
+    font-size: 60px;
+  }
+
+  h2 {
+    font-size: 40px;
+  }
+
+  h3 {
+    font-size: 35px;
+  }
+`;
+
 const PlayerColumn = styled.div`
   display: flex;
   flex-direction: column;
@@ -126,4 +168,18 @@ const RulesColumn = styled.button`
   font-size: 32px;
   justify-content: space-around;
   font-weight: 900;
+`;
+
+const BottomSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: #C9D6EA;
+  border-radius: 24px;
+  border: 4px solid #C9D6EA;
+  padding: 8px 64px;
+  font-size: 32px;
+  justify-content: space-around;
+  font-weight: 900;
+  margin: 0px 32px;
 `;
