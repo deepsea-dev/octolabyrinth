@@ -32,11 +32,12 @@ export const Host: React.FC = () => {
 
   const [gameData, setGameData] = useState<HostPollGameResponse | null>(null);
 
-  const [playing, toggle] = useAudio('/waiting.mp3');
+  const [playingWaiting, toggleWaiting] = useAudio('/waiting.mp3');
+  const [playingPlaying, togglePlaying] = useAudio('/playing.mp3');
 
   useEffect(() => {
     console.log('toggle');
-    toggle();
+    toggleWaiting();
   }, []);
 
   useEffect(() => {
@@ -51,6 +52,8 @@ export const Host: React.FC = () => {
 
   const startGame = () => {
     queryApi(`/api/${gameId}/start`);
+    toggleWaiting();
+    togglePlaying();
   };
 
   return (
