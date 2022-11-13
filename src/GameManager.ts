@@ -50,6 +50,12 @@ class GameManager {
     return this.games[gameId].players.get(playerId)?.moves || [];
   }
 
+  getPlayersTeam(gameId: string, playerId: string): string {
+    const teamcolours = ['red', 'blue', 'green', 'purple'];
+
+    return teamcolours[parseInt(this.games[gameId].players.get(playerId)?.teamId || '0')];
+  }
+
   tryMove(gameId: string, playerId: string, move: string) {
     if (!this.games[gameId].players.has(playerId)) return;
 
