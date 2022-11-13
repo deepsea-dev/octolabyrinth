@@ -149,30 +149,33 @@ class Game {
 
     console.log(`x: ${x}, y: ${y},`);
 
-    if (move == "U") {
-      if (this.maze.grid[y-1][x] != 1) {
-        y -= 1;
-      }
-    } else if (move == "L") {
-      if (this.maze.grid[y][x-1] != 1) {
-        x -= 1;
-      }
-    } else if (move == "D") {
-      if (this.maze.grid[y+1][x] != 1) {
-        y += 1;
-      }
-    } else if (move == "R") {
-      if (this.maze.grid[y][x+1] != 1) {
-        x += 1;
-      }
-    } 
+    try {
+      if (move == "U") {
+        if (this.maze.grid[y-1][x] != 1) {
+          y -= 1;
+        }
+      } else if (move == "L") {
+        if (this.maze.grid[y][x-1] != 1) {
+          x -= 1;
+        }
+      } else if (move == "D") {
+        if (this.maze.grid[y+1][x] != 1) {
+          y += 1;
+        }
+      } else if (move == "R") {
+        if (this.maze.grid[y][x+1] != 1) {
+          x += 1;
+        }
+      } 
 
-    const avatar = this.maze.avatars.find(a => a.id == team)!;
-    avatar.x = x;
-    avatar.y = y;
-    const index = this.maze.avatars.findIndex(a => a.id == team);
-    this.maze.avatars[index] = avatar;
-
+      const avatar = this.maze.avatars.find(a => a.id == team)!;
+      avatar.x = x;
+      avatar.y = y;
+      const index = this.maze.avatars.findIndex(a => a.id == team);
+      this.maze.avatars[index] = avatar;
+    } catch(e) {
+      console.log(e);
+    }
     // If valid
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.players.get(playerId)!.timeOfLastMove = Date.now();
